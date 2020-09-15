@@ -11,20 +11,28 @@ class TodoList extends Component {
     super(props)
     this.state = {
       inputValue: '',
-      list: ['学英语', '听音乐', '玩游戏']
+      list: []
     }
   }
 
-  
-
+  // 组件第一次渲染
+  componentDidMount () {
+    let todoList = JSON.parse(localStorage.getItem("todoList"));
+    if (!todoList) {
+      // 设置一些默认值
+      todoList = ['学英语', '听音乐', '玩游戏']
+    }
+    if (todoList) {
+      this.setState({
+        list: todoList
+      })
+    }
+  }
 
   render() {
     return (
       <Layout>
-
-
         <div>
-
           <input
             value={this.state.inputValue}
             onChange={this.handleInputChange.bind(this)}
@@ -51,6 +59,18 @@ class TodoList extends Component {
     )
   }
 
+
+  // 定义取出数据函数，每次执行操作前进行提取
+  get() {
+    return newList = JSON.parse(localStorage.getItem("todoList"));
+  }
+  
+  // 定义储存数据函数，每次执行操作后进行存储
+  set(newList) {
+    localStorage.setItem("todoList", JSON.stringify(newList));
+  }
+
+
   handleInputChange(e) {
     this.setState({
       inputValue: e.target.value
@@ -64,20 +84,24 @@ class TodoList extends Component {
       return
     }
 
+    const newList = [...this.state.list,this.state.inputValue]
     this.setState({
-      list: [...this.state.list, this.state.inputValue],
+      list: newList,
       // 扩展字符
       inputValue: ''
+      // 点击后将输入框置为空
     })
+
+    
   }
 
   handleItemDelete(index) {
-    const list = [...this.state.list]
+    const newList = [...this.state.list]
     // 深拷贝
 
-    list.splice(index, 1)
+    newList.splice(index, 1)
     this.setState({
-      list: list
+      list: newList
       // 重新赋值数组
     })
   }
@@ -89,11 +113,11 @@ class TodoList extends Component {
     } else if (str === null) {
       return
     } else {
-      const list = [...this.state.list]
-      console.log(list);
-      list.splice(index, 1, str)
+      const newList = [...this.state.list]
+      //console.log(list);
+      newList.splice(index, 1, str)
       this.setState({
-        list: list
+        list: newList
       })
     }
 

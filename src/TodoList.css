@@ -30,3 +30,16 @@ body {
     justify-content: space-between;
     /* border: 1px solid red; */
   }
+
+  li button {
+    border: none;
+    margin-right: 10px;
+  }
+
+  li button:nth-child(1) {
+    color: skyblue;
+  }
+
+  li button:nth-child(2) {
+    color: red;
+  }

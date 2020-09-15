@@ -17,6 +17,7 @@ class TodoList extends Component {
 
   // 组件第一次渲染
   componentDidMount () {
+    // 取出
     let todoList = JSON.parse(localStorage.getItem("todoList"));
     if (!todoList) {
       // 设置一些默认值
@@ -27,6 +28,8 @@ class TodoList extends Component {
         list: todoList
       })
     }
+    // 存储
+    localStorage.setItem("todoList", JSON.stringify(todoList));
   }
 
   render() {
@@ -62,9 +65,9 @@ class TodoList extends Component {
 
   // 定义取出数据函数，每次执行操作前进行提取
   get() {
-    return newList = JSON.parse(localStorage.getItem("todoList"));
+    //return JSON.parse(localStorage.getItem("todoList"));
   }
-  
+
   // 定义储存数据函数，每次执行操作后进行存储
   set(newList) {
     localStorage.setItem("todoList", JSON.stringify(newList));
@@ -80,30 +83,32 @@ class TodoList extends Component {
 
   handleBtnClick() {
     if (this.state.inputValue === '') {
-      alert('请输入内容')
+      alert('不能为空!')
       return
     }
-
-    const newList = [...this.state.list,this.state.inputValue]
+    var datas = JSON.parse(localStorage.getItem("todoList"));
+    console.log(datas);
+    datas.push(this.state.inputValue)
     this.setState({
-      list: newList,
+      list: datas,
       // 扩展字符
       inputValue: ''
       // 点击后将输入框置为空
     })
-
+    localStorage.setItem("todoList", JSON.stringify(datas));
     
   }
 
   handleItemDelete(index) {
-    const newList = [...this.state.list]
+    var datas = JSON.parse(localStorage.getItem("todoList"));
     // 深拷贝
 
-    newList.splice(index, 1)
+    datas.splice(index, 1)
     this.setState({
-      list: newList
+      list: datas
       // 重新赋值数组
     })
+    localStorage.setItem("todoList", JSON.stringify(datas));
   }
 
   handleItemUpdate(index) {
@@ -113,12 +118,13 @@ class TodoList extends Component {
     } else if (str === null) {
       return
     } else {
-      const newList = [...this.state.list]
+      var datas = JSON.parse(localStorage.getItem("todoList"));
       //console.log(list);
-      newList.splice(index, 1, str)
+      datas.splice(index, 1, str)
       this.setState({
-        list: newList
+        list: datas
       })
+      localStorage.setItem("todoList", JSON.stringify(datas));
     }
 
 

@@ -1,0 +1,4 @@
+与Vue不同，react中 定义数据需要 constructor(props) 和 super(props) 基础构造函数般的方法来定义数据
+                                绑定函数需要额外使用.bind(this) 来声明this指向
+		修改数据需要使用 this.setState	形式进行修改			
+       

@@ -1,4 +1,8 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
+import './TodoList.css';
+import { Button } from 'antd';
+import { Layout } from 'antd';
+
 
 class TodoList extends Component {
 
@@ -11,27 +15,39 @@ class TodoList extends Component {
     }
   }
 
+  
+
+
   render() {
     return (
-      <Fragment>
+      <Layout>
+
+
         <div>
+
           <input
             value={this.state.inputValue}
             onChange={this.handleInputChange.bind(this)}
           />
-          <button
+          <Button type="primary"
             onClick={this.handleBtnClick.bind(this)}
           >提交
-                    </button>
+          </Button>
         </div>
         <ul>
           {
             this.state.list.map((item, index) => {
-              return <li key={index} >{item} <button onClick={this.handleItemDelete.bind(this, index)}>X</button> </li>
+              return <li
+                key={index} >{item}
+                <div>
+                  <button onClick={this.handleItemUpdate.bind(this, index)}>修改</button>
+                  <button onClick={this.handleItemDelete.bind(this, index)}>删除</button>
+                </div>
+              </li>
             })
           }
         </ul>
-      </Fragment>
+      </Layout>
     )
   }
 
@@ -64,6 +80,24 @@ class TodoList extends Component {
       list: list
       // 重新赋值数组
     })
+  }
+
+  handleItemUpdate(index) {
+    let str = prompt("修改标签:")
+    if (str === '') {
+      alert('输入不能为空!')
+    } else if (str === null) {
+      return
+    } else {
+      const list = [...this.state.list]
+      console.log(list);
+      list.splice(index, 1, str)
+      this.setState({
+        list: list
+      })
+    }
+
+
   }
 }
 

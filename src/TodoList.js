@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import './TodoList.css';
 import { Button } from 'antd';
-import { Layout } from 'antd';
-
+import { Input } from 'antd';
 
 class TodoList extends Component {
 
@@ -16,7 +15,7 @@ class TodoList extends Component {
   }
 
   // 组件第一次渲染
-  componentDidMount () {
+  componentDidMount() {
     // 取出
     let todoList = JSON.parse(localStorage.getItem("todoList"));
     if (!todoList) {
@@ -34,31 +33,38 @@ class TodoList extends Component {
 
   render() {
     return (
-      <Layout>
-        <div>
-          <input
+      <Fragment>
+        <header>
+
+          
+
+        
+          <Input 
             value={this.state.inputValue}
             onChange={this.handleInputChange.bind(this)}
+            placeholder="提交新的待办事项"
           />
           <Button type="primary"
             onClick={this.handleBtnClick.bind(this)}
           >提交
           </Button>
+        </header>
+        <div className="content">
+          <ul>
+            {
+              this.state.list.map((item, index) => {
+                return <li
+                  key={index} >{item}
+                  <div>
+                    <Button type="primary" onClick={this.handleItemUpdate.bind(this, index)}>修改</Button>
+                    <Button type="primary" danger onClick={this.handleItemDelete.bind(this, index)}>删除</Button>
+                  </div>
+                </li>
+              })
+            }
+          </ul>
         </div>
-        <ul>
-          {
-            this.state.list.map((item, index) => {
-              return <li
-                key={index} >{item}
-                <div>
-                  <button onClick={this.handleItemUpdate.bind(this, index)}>修改</button>
-                  <button onClick={this.handleItemDelete.bind(this, index)}>删除</button>
-                </div>
-              </li>
-            })
-          }
-        </ul>
-      </Layout>
+      </Fragment>
     )
   }
 
@@ -87,7 +93,6 @@ class TodoList extends Component {
       return
     }
     var datas = JSON.parse(localStorage.getItem("todoList"));
-    console.log(datas);
     datas.push(this.state.inputValue)
     this.setState({
       list: datas,
@@ -96,7 +101,7 @@ class TodoList extends Component {
       // 点击后将输入框置为空
     })
     localStorage.setItem("todoList", JSON.stringify(datas));
-    
+
   }
 
   handleItemDelete(index) {

@@ -20,14 +20,51 @@ body {
       monospace;
   }
 
+  header {
+    display: flex;
+    justify-content: center;
+    padding: 20px 50px;
+  }
+
+  @media screen and (min-width: 500px) {
+    header {
+      padding: 20px 200px;
+    }
+  }
+
+
+  .content {
+    margin-top: 20px;
+    padding: 0px 25px;
+    border-top: 1px solid #ccc;
+  }
+
+  @media screen and (min-width: 500px) {
+    .content {
+      padding: 0 150px;
+    }
+  }
+
   input {
     border: 1px solid red;
   }
+
+  input::-webkit-input-placeholder{
+    color:#ccc;
+  }
+
+  ul {
+    margin-top: 20px;
+  }
+
 
   li {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 10px;
+    padding-left: 10px;
     /* border: 1px solid red; */
   }
 
@@ -43,3 +80,4 @@ body {
   li button:nth-child(2) {
     color: red;
   }
+
